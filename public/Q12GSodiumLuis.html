@@ -1,9 +1,34 @@
-<h1> Q1 3rd Graded Exercise submitted by John Ley of 9-Sodium </h1>
+<h1> Q1 3rd Graded Exercise by John Ley of 9-Sodium </h1>
 
 <input id ="in1" type = "number" placeholder="Meal Price"> <br>
 <input id ="in2" type = "number" placeholder="Service Charge (%)"> <br>
 <input id ="in3" type = "number" placeholder="Tip"> 
+
 <button onclick = "calculateTotal()"> Calculate Total </button> 
+
+<p id="output"> </p>
+
+<script> 
+    function calculateTotal()
+    {
+        let mealPrice = parseFloat(document.getElementById("in1").value);
+        let serviceCharge = parseFloat(document.getElementById("in2").value);
+        let tip = parseFloat(document.getElementById("in3").value);
+
+
+        let totalCost = mealPrice + tip + (serviceCharge / 100 * mealPrice)
+
+        document.getElementById("output").innerHTML = "Total Meal: " + totalCost.toFixed(2);
+    }
+</script>
+
+<footer>
+    <p> Resources used: </p>
+    <p> W3Schools.com. (n.d.). https://www.w3schools.com/jsref/jsref_tofixed.asp </p>
+    <p> W3Schools.com. (n.d.-b). https://www.w3schools.com/jsref/prop_html_innerhtml.asp</p>
+        
+</footer>
+
 
 <script>
     function calculateTotal() 
