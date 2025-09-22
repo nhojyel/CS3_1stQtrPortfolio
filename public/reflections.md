@@ -24,7 +24,7 @@
 
 5. **Assignment Operators** - These are used to assign values to variables, and shorthand forms like += and -= can make code shorter and easier to read. While I understand the basic use of them, I sometimes make mistakes when combining assignment with other operations in larger programs. For example, I may forget how the value updates step by step, which can lead to logical errors. Another issue I face is that when assignment operators are placed inside larger expressions, can make the flow of updates hard to take track off when analyzing code. 
 
-### Describe on what will be your plan of action in order to help yourself in understanding further the topics listed on the second items.
+# Describe on what will be your plan of action in order to help yourself in understanding further the topics listed on the second items.
 
 1. I will practice nested loops in simple exercises like printing patterns, handling 2D arrays, and printing figures. Then I'll gradually move on to solving harder problems that require multiple layers of looping. By doing this step-by-step, I can get used to tracking loop counters without confusion
 
@@ -42,7 +42,7 @@
 
 * **Group Coding Challenges** - Working with our triads or classmates in general, helped me learn different approaches to the same problem. It was effective because we explained our thought processes. This really concepts more deeply.
 
-## Not Effective Activites
+# Not Effective Activites
 
 * **Pure Lecture Sessions** - While the lectures provided information, they were not as effective for me since I learn better by doing. Plus, our generation with all the brainrot and stuff, makes our attention span so little, and hard not to sleep in class. Just listening without applying concepts right away makes it harder to retain. 
 
