@@ -38,12 +38,12 @@
 
 ## In the activities that were done in class, list at least two that you think were effective and at least two that you think not effective in helping you understand topics in our course and why?
 
-* **Hands-on Coding Practice Exercises** - These were effective because they allowed me to directly apply what we just learned. It was like commiting a file to link to github, the memory just saves. Writing the code made me feel  more confident, and I was able to quickly see which parts I understood, and which needed more review or consultation on.
+1. **Hands-on Coding Practice Exercises** - These were effective because they allowed me to directly apply what we just learned. It was like commiting a file to link to github, the memory just saves. Writing the code made me feel  more confident, and I was able to quickly see which parts I understood, and which needed more review or consultation on.
 
-* **Group Coding Challenges** - Working with our triads or classmates in general, helped me learn different approaches to the same problem. It was effective because we explained our thought processes. This really concepts more deeply.
+2. **Group Coding Challenges** - Working with our triads or classmates in general, helped me learn different approaches to the same problem. It was effective because we explained our thought processes. This really concepts more deeply.
 
 # Not Effective Activites
 
-* **Pure Lecture Sessions** - While the lectures provided information, they were not as effective for me since I learn better by doing. Plus, our generation with all the brainrot and stuff, makes our attention span so little, and hard not to sleep in class. Just listening without applying concepts right away makes it harder to retain. 
+1. **Pure Lecture Sessions** - While the lectures provided information, they were not as effective for me since I learn better by doing. Plus, our generation with all the brainrot and stuff, makes our attention span so little, and hard not to sleep in class. Just listening without applying concepts right away makes it harder to retain. 
 
-* **Copying Code Without Explanation** - Sometimes we were given code to copy and run, but without breaking down why it worked. This activity was not very effective because I could run the program, but I did not fully understand the logic behind it. But coding on my own and researching about stuff is way better.
+2. **Copying Code Without Explanation** - Sometimes we were given code to copy and run, but without breaking down why it worked. This activity was not very effective because I could run the program, but I did not fully understand the logic behind it. But coding on my own and researching about stuff is way better.
