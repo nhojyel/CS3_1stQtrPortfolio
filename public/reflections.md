@@ -1,4 +1,4 @@
-# 5 TOPICS THAT I KNOW VERY WELL
+# List and describe at least 5 topics that we discussed in class that you know very well. Each description should be at least 1 paragraph with twoto five sentences.
 
 1. **Arithmetic Operators** - These operators are one of the most fundamental concepts in programming, and we use them in JavaScript like we did not just in C++ last year but also in Python during CS1. They include addition (+), subtraction (-), multiplication (*), divison (/), and modulus (%). Since we  already had prior knowledge about these from my past 2 years in Pisay, learning them in JS was easier because they almost function the same way. Most of our coding tasks rely on arithmetic operators, so we got plenty of practice to understand them deeply. This topic really is the foundation of many programs we write.
 
@@ -12,7 +12,7 @@
 
 > so basically what makes it easy for me to learn is that these lessons are: JS == C++ .
 
-# 5 TOPICS THAT I KNOW AND CAN DESCRIBE BUT NEEDS FURTHER PRACTICE/DISCUSSION 
+# List at least 5 topics that you know and can describe but needs further practice/discussion and why.  The why should be per topic listed.  
 
 1. **Applying Nested Loops** - Nested loops are loops inside another loop, where the outer loop controls how many times the inner loop runs. They are often used for tasks such as handling grids, tables, or multi-dimensional array is what I learned in CS2. While I understand the concept, applying them in like generating a asterisk triangle or some advanced problems can be confusing for me because both loop counters must be managed carefully. I sometimes struggle with avoiding off-by-one errors or infinite loops, especially when working with multiple nested structures. That is why I need more practic to fully master applying loops in real coding tasks.
 
@@ -24,7 +24,7 @@
 
 5. **Assignment Operators** - These are used to assign values to variables, and shorthand forms like += and -= can make code shorter and easier to read. While I understand the basic use of them, I sometimes make mistakes when combining assignment with other operations in larger programs. For example, I may forget how the value updates step by step, which can lead to logical errors. Another issue I face is that when assignment operators are placed inside larger expressions, can make the flow of updates hard to take track off when analyzing code. 
 
-### Plan of Action 
+### Describe on what will be your plan of action in order to help yourself in understanding further the topics listed on the second items.
 
 1. I will practice nested loops in simple exercises like printing patterns, handling 2D arrays, and printing figures. Then I'll gradually move on to solving harder problems that require multiple layers of looping. By doing this step-by-step, I can get used to tracking loop counters without confusion
 
@@ -36,7 +36,7 @@
 
 5. I will practice solving coding problems that use assignment operators in different ways. Then I'll break down each step of how variable updates to avoid confusion as mentioned earlier. This is not really a massive problem as it is similar to incrementing, but I'm a careless guy and I want to make sure I know how to do stuff properly.
 
-## Effective Activities
+## In the activities that were done in class, list at least two that you think were effective and at least two that you think not effective in helping you understand topics in our course and why?
 
 * **Hands-on Coding Practice Exercises** - These were effective because they allowed me to directly apply what we just learned. It was like commiting a file to link to github, the memory just saves. Writing the code made me feel  more confident, and I was able to quickly see which parts I understood, and which needed more review or consultation on.
 
