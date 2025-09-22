@@ -36,7 +36,7 @@
 
 5. I will practice solving coding problems that use assignment operators in different ways. Then I'll break down each step of how variable updates to avoid confusion as mentioned earlier. This is not really a massive problem as it is similar to incrementing, but I'm a careless guy and I want to make sure I know how to do stuff properly.
 
-## In the activities that were done in class, list at least two that you think were effective and at least two that you think not effective in helping you understand topics in our course and why?
+# In the activities that were done in class, list at least two that you think were effective and at least two that you think not effective in helping you understand topics in our course and why?
 
 1. **Hands-on Coding Practice Exercises** - These were effective because they allowed me to directly apply what we just learned. It was like commiting a file to link to github, the memory just saves. Writing the code made me feel  more confident, and I was able to quickly see which parts I understood, and which needed more review or consultation on.
 
