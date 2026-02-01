@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <title>Club Sign-Up Form</title>
 <style>
   body{
     font-family: Tahoma, Arial, sans-serif;
@@ -79,6 +80,45 @@
     }
   }
 
+   function saveSignup(){
+    if(!confirmSubmit()) return false;
+
+    
+    let signup = {
+      studentID: document.querySelector('[name="studentID"]').value,
+      fullName: document.querySelector('[name="fullName"]').value,
+      birthday: document.querySelector('[name="birthday"]').value,
+      email: document.querySelector('[name="email"]').value,
+      mobile: document.querySelector('[name="mobile"]').value,
+      grade: document.querySelector('[name="grade"]').value,
+      status: document.querySelector('input[name="status"]:checked').value,
+      club: document.querySelector('[name="club"]').value,
+      reason: document.querySelector('[name="reason"]').value
+    };
+
+    
+    let signups = localStorage.getItem("clubSignups");
+
+    if(signups){
+      signups = JSON.parse(signups);
+    } else {
+      signups = [];
+    }
+
+    
+    signups.push(signup);
+
+    
+    localStorage.setItem("clubSignups", JSON.stringify(signups));
+
+    alert("Signup saved successfully!");
+
+    return false; 
+  }
+
+  function viewSignups(){
+    window.location.href = "viewSignUps.html";
+  }
   
   
 </script>
@@ -87,9 +127,7 @@
 
 <body>
 
-  <form method="post" action ="submit"
-        onsubmit="return confirmSubmit()"
-        onreset="return confirmReset()" >
+  <form onsubmit="return saveSignup()" onreset="return confirmReset()" >
 
 <fieldset>
 
@@ -165,6 +203,7 @@
 <div class="buttons">
   <input type="submit" value="Submit">
   <input type="reset" value="Reset">
+  <input type="button" value="View Signups" onclick="viewSignups()">
 </div>
 </form>
 </body>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Club Sign-Up View</title>
+  <style>
+    body{
+      font-family: Tahoma, Arial, sans-serif;
+      background-color: skyblue;
+      padding: 20px;
+    }
+
+    .container{
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    select{
+      padding: 6px;
+      margin-bottom: 15px;
+    }
+
+    table{
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th, td{
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: center;
+    }
+
+    th{
+      background-color: #4CAF50;
+      color: white;
+    }
+
+    .total{
+      margin-top: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+  <h2>Club Sign-ups</h2>
+
+  <label>
+    Filter by Club:
+    <select onchange="loadTable(this.value)">
+      <option value="All">All Clubs</option>
+      <option value="Badminton">Volant</option>
+      <option value="Basketball">Pallastro</option>
+      <option value="Volleyball">Kislap</option>
+      <option value="TableTennis">Pendulum</option>
+      <option value="Math">Math Club</option>
+    </select>
+  </label>
+
+  <table>
+    <thead>
+      <tr>
+       <th>Club</th>
+       <th>ID</th>
+       <th>Full Name</th>
+       <th>Grade</th>
+       <th>Email</th>
+       <th>Mobile</th>
+       <th>Intern|Extern</th>
+     </tr>
+
+    </thead>
+    <tbody id="tableBody"></tbody>
+  </table>
+
+  <div id="noDataMessage" style="display:none; margin-top:10px; font-weight:bold;"> No Sign Ups for this club.</div>
+
+  <div class="total" id="totalCount"></div>
+  <button onclick="goBack()" style="margin-top:15px;"> Back to Sign-Up</button> 
+  
+</div>
+
+<script>
+
+  const clubNames = {
+    Badminton: "Volant",
+    Basketball: "Pallastro",
+    Volleyball: "Kislap",
+    TableTennis: "Pendulum",
+    Math: "Math Club"
+  };
+
+  function loadTable(filter){
+    let signups = JSON.parse(localStorage.getItem("clubSignups")) || [];
+    let tbody = document.getElementById("tableBody");
+    let noData = document.getElementById("noDataMessage");
+
+    tbody.innerHTML = "";
+    noData.style.display = "none";
+
+    let count = 0;
+
+    signups.forEach(s => {
+      if(filter === "All" || s.club === filter){
+        let row = `
+          <tr>
+            <td>${clubNames[s.club]}</td>
+            <td>${s.studentID}</td>
+            <td>${s.fullName}</td>
+            <td>${s.grade}</td>
+            <td>${s.email}</td>
+            <td>${s.mobile}</td>
+            <td>${s.status === "I" ? "Intern" : "Extern"}</td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+        count++;
+      }
+    });
+
+    if(count===0){
+      noData.style.display="block";
+    }
+
+    document.getElementById("totalCount").innerText =
+      "Total Sign-ups: " + count;
+  }
+
+  
+  function goBack(){
+  window.location.href = "Q3_2GSodiumLuis.html"; 
+}
+ 
+  loadTable("All");
+</script>
+
+</body>
+</html>
