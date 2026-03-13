@@ -20,6 +20,7 @@
       --input-bg: #12121a;
       --star-empty: #3a3a52;
       --radius: 12px;
+      --danger: #e05c5c;
     }
 
     body {
@@ -253,10 +254,11 @@
       margin-top: 3px;
     }
 
+    .movie-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+
     .movie-stars {
       display: flex;
       gap: 2px;
-      flex-shrink: 0;
     }
 
     .movie-stars span {
@@ -267,6 +269,62 @@
     .movie-stars span.lit {
       color: var(--accent);
     }
+
+    .btn-delete {
+      background: transparent;
+      border: 1px solid var(--danger);
+      border-radius: 6px;
+      color: var(--danger);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 11px;
+      cursor: pointer;
+    }
+
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 900;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal-overlay.visible { display: flex; }
+
+    .modal-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      width: 90%;
+      max-width: 360px;
+      text-align: center;
+    }
+
+    .modal-box h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+    }
+
+    .modal-box p { color: var(--muted); font-size: 14px; margin: 12px 0 20px; }
+    .modal-box p strong { color: var(--text); }
+    .modal-actions { display: flex; gap: 10px; }
+
+    .btn-cancel, .btn-confirm-delete {
+      flex: 1;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 11px;
+      cursor: pointer;
+      border: none;
+    }
+    .btn-cancel { background: var(--border); color: var(--text); }
+    .btn-confirm-delete { background: var(--danger); color: #fff; }
 
     .empty-state {
       text-align: center;
@@ -290,7 +348,11 @@
   </header>
 
   <div class="card">
-    <h2>Add a Movie</h2>
+    <h2>Add / Update a Movie</h2>
+
+    <div id="update-banner" style="display:none; background:#1a2a1a; border:1px solid #3a5a3a; border-radius:8px; padding:10px 14px; margin-bottom:20px; font-size:13px; color:#7dda7d;">
+      ♻️ This title already exists, the rating will be averaged and info updated.
+    </div>
 
     <div class="field">
       <label for="title">Title</label>
@@ -347,14 +409,27 @@
 
 </div>
 
+<div class="modal-overlay" id="delete-modal">
+  <div class="modal-box">
+    <h3>Delete Movie?</h3>
+    <p>Are you sure you want to remove <strong id="modal-movie-name"></strong>? This cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="btn-cancel" id="modal-cancel">Cancel</button>
+      <button class="btn-confirm-delete" id="modal-confirm">OK, Delete</button>
+    </div>
+  </div>
+</div>
+
 <div class="toast" id="toast">🎬 Movie added!</div>
 
 <script>
   const STORAGE_KEY = 'movies';
   let selectedRating = 0;
+  let pendingDeleteIndex = null;
 
-  const starsEl = document.getElementById('stars-input');
+  const starsEl   = document.getElementById('stars-input');
   const starNodes = starsEl.querySelectorAll('.star');
+  const titleEl   = document.getElementById('title');
 
   function updateStarDisplay(rating) {
     starNodes.forEach(s => {
@@ -364,15 +439,20 @@
 
   starNodes.forEach(star => {
     const val = parseInt(star.dataset.val);
-
     star.addEventListener('mouseover', () => updateStarDisplay(val));
-    star.addEventListener('mouseout', () => updateStarDisplay(selectedRating));
-
+    star.addEventListener('mouseout',  () => updateStarDisplay(selectedRating));
     star.addEventListener('click', () => {
       selectedRating = val;
       updateStarDisplay(selectedRating);
       document.getElementById('rating-err').textContent = '';
     });
+  });
+
+  titleEl.addEventListener('input', () => {
+    const typed  = titleEl.value.trim().toLowerCase();
+    const exists = loadMovies().find(m => m.title.toLowerCase() === typed);
+    document.getElementById('update-banner').style.display = typed && exists ? 'block' : 'none';
+    document.getElementById('addBtn').textContent = typed && exists ? 'Update Movie' : 'Add Movie';
   });
 
   function loadMovies() {
@@ -387,8 +467,8 @@
   }
 
   function renderList() {
-    const movies = loadMovies();
-    const listEl = document.getElementById('movie-list');
+    const movies  = loadMovies();
+    const listEl  = document.getElementById('movie-list');
     const countEl = document.getElementById('movie-count');
     countEl.textContent = movies.length;
 
@@ -403,15 +483,27 @@
           <div class="movie-title">${escapeHtml(m.title)} <span style="color:var(--muted);font-weight:400">(${escapeHtml(m.year)})</span></div>
           <div class="movie-meta">${escapeHtml(m.genre)}</div>
         </div>
-        <div class="movie-stars" aria-label="Rating: ${m.rating} out of 5">
-          ${[1,2,3,4,5].map(n => `<span class="${n <= parseInt(m.rating) ? 'lit' : ''}">★</span>`).join('')}
+        <div class="movie-right">
+          <div class="movie-stars" aria-label="Rating: ${m.rating} out of 5">
+            ${[1,2,3,4,5].map(n => `<span class="${n <= Math.round(parseFloat(m.rating)) ? 'lit' : ''}">★</span>`).join('')}
+          </div> 
+          <button class="btn-delete" data-index="${i}">Delete</button>
         </div>
       </div>
     `).join('');
+
+    
+
+    listEl.querySelectorAll('.btn-delete').forEach(btn => {
+      btn.addEventListener('click', () => {
+        pendingDeleteIndex = parseInt(btn.dataset.index);
+        document.getElementById('modal-movie-name').textContent = loadMovies()[pendingDeleteIndex].title;
+        document.getElementById('delete-modal').classList.add('visible');
+      });
+    });
   }
 
   document.getElementById('addBtn').addEventListener('click', () => {
-    const titleEl = document.getElementById('title');
     const yearEl  = document.getElementById('year');
     const genreEl = document.getElementById('genre');
     let valid = true;
@@ -441,34 +533,55 @@
 
     if (!valid) return;
 
-    const movie = {
-      title:  titleEl.value.trim(),
-      year:   yearEl.value.trim(),
-      genre:  genreEl.value,
-      rating: String(selectedRating)
-    };
+    const movies     = loadMovies();
+    const inputTitle = titleEl.value.trim();
+    const existIdx   = movies.findIndex(m => m.title.toLowerCase() === inputTitle.toLowerCase());
 
-    const movies = loadMovies();
-    movies.push(movie);
-    saveMovies(movies);
-    renderList();
+    if (existIdx !== -1) {
+      const averaged = ((parseFloat(movies[existIdx].rating) + selectedRating) / 2).toFixed(1);
+      movies[existIdx] = { title: inputTitle, year: yearEl.value.trim(), genre: genreEl.value, rating: averaged };
+      saveMovies(movies);
+      renderList();
+      showToast('♻️ Movie updated!');
+    } else {
+      movies.push({ title: inputTitle, year: yearEl.value.trim(), genre: genreEl.value, rating: String(selectedRating) });
+      saveMovies(movies);
+      renderList();
+      showToast('🎬 Movie added!');
+    }
 
     titleEl.value = '';
     yearEl.value  = '';
     genreEl.selectedIndex = 0;
     selectedRating = 0;
     updateStarDisplay(0);
-
-    showToast();
+    document.getElementById('update-banner').style.display = 'none';
+    document.getElementById('addBtn').textContent = 'Add Movie';
   });
 
-  function showToast() {
+  document.getElementById('modal-cancel').addEventListener('click', () => {
+    document.getElementById('delete-modal').classList.remove('visible');
+  });
+
+  document.getElementById('modal-confirm').addEventListener('click', () => {
+    if (pendingDeleteIndex === null) return;
+    const movies = loadMovies();
+    const name   = movies[pendingDeleteIndex].title;
+    movies.splice(pendingDeleteIndex, 1);
+    saveMovies(movies);
+    renderList();
+    document.getElementById('delete-modal').classList.remove('visible');
+    showToast(`🗑️ "${name}" removed`);
+  });
+
+  function showToast(msg = '🎬 Movie added!') {
     const t = document.getElementById('toast');
+    t.textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2200);
   }
 
-  function escapeHtml(str) {  //so the codw gets sanitizedd before entering stuff ig
+  function escapeHtml(str) {
     return String(str)
       .replace(/&/g,'&amp;')
       .replace(/</g,'&lt;')
